@@ -12,8 +12,8 @@ class Tree {
         let mid = start + Math.floor((end - start) / 2);
         let root = new Node(array[mid]);
 
-        root.left = this.buildTree(array, mid + 1, end);
-        root.right = this.buildTree(array, start, mid - 1);
+        root.left = this.buildTree(array, start, mid - 1);
+        root.right = this.buildTree(array, mid + 1, end);
 
         return root;
     }
@@ -40,20 +40,32 @@ class Tree {
         }
     };
 
-    insert(value) {
-        if (!this.root.left || !this.root.right) {
-            this.root.data = value;
+    insert(value, root = this.root) {
+        if (root === null) {
+            root = new Node(value);
         }
 
-        if (value < this.root.data) {
-            this.root = this.root.left;
-            this.insert(value);
-        } else if (value > this.root.data) {
-            this.root = this.root.right;
-            this.insert(value);
+        if (value < root.data) {
+            this.insert(value, root.left);
+        } else if (value > root.data) {
+            this.insert(value, root.right);
+        }
+    }
+
+    find(value, root = this.root) {
+        if (!root) {
+            return null;
         }
 
-        return this.root;
+        if (root.data === value) {
+            return root;
+        }
+
+        if (value < root.data) {
+            this.find(value, root.left);
+        } else if (value > root.data) {
+            this.find(value, root.right);
+        }
     }
 }
 
