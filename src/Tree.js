@@ -7,7 +7,9 @@ class Tree {
     }
 
     buildTree(array, start, end) {
-        if (start > end) return null;
+        if (start > end) {
+            return null;
+        }
 
         let mid = start + Math.floor((end - start) / 2);
         let root = new Node(array[mid]);
@@ -41,8 +43,14 @@ class Tree {
     };
 
     insert(value, root = this.root) {
-        if (root === null) {
-            root = new Node(value);
+        if (root.data === value) {
+            return null;
+        }
+
+        if (value < root.data && root.left === null) {
+            root.left = new Node(value);
+        } else if (value > root.data && root.right === null) {
+            root.right = new Node(value);
         }
 
         if (value < root.data) {
@@ -50,6 +58,8 @@ class Tree {
         } else if (value > root.data) {
             this.insert(value, root.right);
         }
+
+        return root;
     }
 
     find(value, root = this.root) {
