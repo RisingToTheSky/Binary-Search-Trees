@@ -5,10 +5,12 @@ let tree = new Tree(array);
 tree.insert(1);
 tree.insert(2);
 tree.insert(69);
-tree.find(69);
-// tree.find(324);
-// tree.find(8);
+
+tree.deleteItem(2);
+tree.deleteItem(23);
+
 tree.prettyPrint(tree.root);
-console.log(tree.root);
+tree.prettyPrint(tree.find(8));
+tree.prettyPrint(tree.find(67));
 
 

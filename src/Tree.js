@@ -62,6 +62,29 @@ class Tree {
         return root;
     }
 
+    deleteItem(value, root = this.root) {
+        // 1. If item has no children
+        if (root === null) {
+            return root;
+        }
+
+        if (value < root.data) {
+            root.left = this.deleteItem(value, root.left);
+        } else if (value > root.data) {
+            root.right = this.deleteItem(value, root.right);
+        } else {
+            if (root.left === null) {
+                root.right = null;
+                return root.right;
+            } else if (root.right === null) {
+                root.left = null;
+                return root.left;
+            }
+        }
+
+        return root;
+    }
+    
     find(value, root = this.root) {
         if (!root) {
             return null;
@@ -72,10 +95,12 @@ class Tree {
         }
 
         if (value < root.data) {
-            this.find(value, root.left);
+            return this.find(value, root.left);
         } else if (value > root.data) {
-            this.find(value, root.right);
+            return this.find(value, root.right);
         }
+
+        return root;
     }
 }
 
