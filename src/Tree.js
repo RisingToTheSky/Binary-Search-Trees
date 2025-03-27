@@ -181,31 +181,28 @@ class Tree {
         callback(root);
     }
 
-    height(node, root = this.root) {
+    height(node) {
+        if (typeof node === 'number') {
+            node = this.find(node);
+        }
+
+        if (node === null || !node) {
+            return -1;
+        }
+
+        let leftSubTree = this.height(node.left);
+        let rightSubTree = this.height(node.right);
+        
+        return Math.max(leftSubTree, rightSubTree) + 1;
+    }
+
+    depth(node, root = this.root) {
         let value;
         if (typeof node === 'number') {
-            value = node;
+            value = this.find(node);
         }
 
-        let leaf = this.find(value, root);
-        if (!leaf) {
-            return "node not in tree";
-        }
-        let leftLeaf = leaf.left;
-        let rightLeaf = leaf.right;
-        let leftCounter = 1;
-        let rightCounter = 1;
-        while (leftLeaf !== null && rightLeaf !== null) {
-            if (leftLeaf.left !== null) {
-                leftCounter++;
-                leftLeaf = leftLeaf.left;
-            }  else {
-                rightCounter++;;
-                rightLeaf = rightLeaf.right;
-            }
-        }
 
-        return Math.max(leftCounter, rightCounter);
     }
 }
 
