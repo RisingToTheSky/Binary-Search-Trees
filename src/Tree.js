@@ -180,6 +180,33 @@ class Tree {
         this.postOrder(callback, root.right);
         callback(root);
     }
+
+    height(node, root = this.root) {
+        let value;
+        if (typeof node === 'number') {
+            value = node;
+        }
+
+        let leaf = this.find(value, root);
+        if (!leaf) {
+            return "node not in tree";
+        }
+        let leftLeaf = leaf.left;
+        let rightLeaf = leaf.right;
+        let leftCounter = 1;
+        let rightCounter = 1;
+        while (leftLeaf !== null && rightLeaf !== null) {
+            if (leftLeaf.left !== null) {
+                leftCounter++;
+                leftLeaf = leftLeaf.left;
+            }  else {
+                rightCounter++;;
+                rightLeaf = rightLeaf.right;
+            }
+        }
+
+        return Math.max(leftCounter, rightCounter);
+    }
 }
 
 export {Tree};
