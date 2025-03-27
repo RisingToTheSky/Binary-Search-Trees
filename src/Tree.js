@@ -147,6 +147,39 @@ class Tree {
         }
 
     }
+
+    inOrder(callback, root = this.root) {
+        if (typeof callback !== 'function') {
+            throw new Error("function not provided!");
+        }
+
+        if (root === null) return;
+        this.inOrder(callback, root.left);
+        callback(root);
+        this.inOrder(callback, root.right);
+    }
+
+    preOrder(callback, root = this.root) {
+        if (typeof callback !== 'function') {
+            throw new Error("function not provided!");
+        }
+
+        if (root === null) return;
+        callback(root);
+        this.preOrder(callback, root.left);
+        this.preOrder(callback, root.right);
+    }
+
+    postOrder(callback, root = this.root) {
+        if (typeof callback !== 'function') {
+            throw new Error("function not provided!");
+        }
+
+        if (root === null) return;
+        this.postOrder(callback, root.left);
+        this.postOrder(callback, root.right);
+        callback(root);
+    }
 }
 
 export {Tree};
