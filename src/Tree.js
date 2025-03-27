@@ -189,20 +189,38 @@ class Tree {
         if (node === null || !node) {
             return -1;
         }
-
-        let leftSubTree = this.height(node.left);
-        let rightSubTree = this.height(node.right);
         
-        return Math.max(leftSubTree, rightSubTree) + 1;
+        return Math.max(this.height(node.left), this.height(node.right)) + 1;
     }
 
     depth(node, root = this.root) {
-        let value;
-        if (typeof node === 'number') {
-            value = this.find(node);
+        if (root === null) {
+            return -1;
         }
 
+    }
 
+    isBalanced(root = this.root) {
+        if (root === null) return true;
+
+        let leftHeight = this.height(root.left);
+        let rightHeight = this.height(root.right);
+
+        if (Math.abs((leftHeight - rightHeight)) > 1) {
+            return false;
+        }
+
+        return this.isBalanced(root.left) && this.isBalanced(root.right);
+    }
+
+    rebalance() {
+        let array = [];
+        this.inOrder((root) => {
+            array.push(root.data);
+        })
+
+        this.array = array;
+        this.root  = this.buildTree(this.array, 0, this.array.length - 1);
     }
 }
 
