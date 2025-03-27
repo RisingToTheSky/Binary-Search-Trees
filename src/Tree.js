@@ -74,15 +74,41 @@ class Tree {
             root.right = this.deleteItem(value, root.right);
         } else {
             if (root.left === null) {
-                root.right = null;
-                return root.right;
+                // skip over child node, in other words, point current node to new child
+                if (root.right !== null) {
+                    root.left = root.right;
+                    return root.right;
+                } else {
+                    root.right = null;
+                    return root.right;
+                }
             } else if (root.right === null) {
-                root.left = null;
-                return root.left;
+                if (root.left !== null) {
+                    root.right = root.left;
+                    return root.right;
+                } else {
+                    root.left = null;
+                    return root.left;
+                }
+            } else {
+                let closest = root.right;
+                closest = this.getClosest(value, closest);
+                console.log(root);
+                console.log(root.right);
+                closest.left = root.left;
+                return closest;
             }
         }
 
         return root;
+    }
+
+    getClosest(value, closest) {
+        if (closest.left === null) {
+            return closest;
+        } else {
+            return this.getClosest(value, closest.left);
+        }
     }
     
     find(value, root = this.root) {
@@ -101,6 +127,25 @@ class Tree {
         }
 
         return root;
+    }
+
+    levelOrder(callback, root = this.root) {
+        if (typeof callback !== 'function') {
+            throw new Error("function not provided!");
+        }
+        if (root === null) return;
+        let queue = [];
+        queue.push(root);
+        while (queue.length > 0) {
+            let current = queue.shift();
+            callback(current);
+            if (current.left !== null) {
+                queue.push(current.left);
+            } else if (current.right !== null) {
+                queue.push(current.right);
+            }
+        }
+
     }
 }
 
