@@ -1,38 +1,46 @@
-import { Tree } from "./Tree"
+import { Tree } from "./Tree";
 
-let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+function generateArray() {
+    let array = [];
+    for (let i =0; i < 100; i++) {
+        array.push(Math.floor(Math.random() * 100));
+    }
+    return array;
+}
+
+let array = generateArray();
+let levelOrder = [];
+let preOrder = [];
+let postOrder = [];
+let inOrder = [];
 let tree = new Tree(array);
-tree.insert(1);
-tree.insert(2);
-tree.insert(69);
-tree.insert(101);
-tree.insert(102);
-console.log(tree.isBalanced());
-tree.deleteItem(2);
-tree.deleteItem(23);
-tree.deleteItem(1);
-tree.deleteItem(5);
-tree.deleteItem(4);
-tree.deleteItem(67);
-tree.deleteItem(324);
-tree.deleteItem(8);
-tree.levelOrder((node) => console.log(node));
-tree.inOrder((node) => console.log(node.data));
-tree.preOrder((node) => console.log(node.data));
-tree.postOrder((node) => console.log(node.data));
-console.log(tree.height(4));
-console.log(tree.height(6345));
-console.log(tree.height(111111));
-console.log(tree.height(69));
-console.log(tree.height(8));
-console.log(tree.depth(8));
-console.log(tree.depth(4));
-console.log(tree.depth(23));
-console.log(tree.depth(100000));
-tree.rebalance();
-console.log(tree.isBalanced());
 tree.prettyPrint(tree.root);
-tree.prettyPrint(tree.find(8));
-tree.prettyPrint(tree.find(67));
+console.log(tree.isBalanced());
+tree.levelOrder((node) => levelOrder.push(node.data));
+tree.preOrder((node) => preOrder.push(node.data));
+tree.postOrder((node) => postOrder.push(node.data));
+tree.inOrder((node) => inOrder.push(node.data));
+console.log(levelOrder);
+console.log(preOrder);
+console.log(postOrder);
+console.log(inOrder);
 
-
+// Unbalance tree
+tree.insert(101);
+tree.insert(104);
+tree.insert(205);
+console.log(tree.isBalanced());
+tree.rebalance();
+tree.prettyPrint(tree.root);
+levelOrder.length = 0;
+preOrder.length = 0;
+postOrder.length = 0;
+inOrder.length = 0;
+tree.levelOrder((node) => levelOrder.push(node.data));
+tree.preOrder((node) => preOrder.push(node.data));
+tree.postOrder((node) => postOrder.push(node.data));
+tree.inOrder((node) => inOrder.push(node.data));
+console.log(levelOrder);
+console.log(preOrder);
+console.log(postOrder);
+console.log(inOrder);

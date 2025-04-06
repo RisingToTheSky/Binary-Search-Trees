@@ -140,7 +140,8 @@ class Tree {
             callback(current);
             if (current.left !== null) {
                 queue.push(current.left);
-            } else if (current.right !== null) {
+            }
+            if (current.right !== null) {
                 queue.push(current.right);
             }
         }
