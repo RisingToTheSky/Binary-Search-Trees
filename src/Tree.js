@@ -93,10 +93,9 @@ class Tree {
             } else {
                 let closest = root.right;
                 closest = this.getClosest(value, closest);
-                console.log(root);
-                console.log(root.right);
-                closest.left = root.left;
-                return closest;
+                root.data = closest.data;
+                root.right = this.deleteItem(closest.data, root.right);
+                return root;
             }
         }
 
@@ -194,6 +193,10 @@ class Tree {
     }
 
     depth(node, root = this.root) {
+        if (!this.find(node)) {
+            return "node not found";
+        }
+
         if (node === root.data) {
             return 0;
         }
